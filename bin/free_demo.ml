@@ -25,6 +25,7 @@ module Demo = struct
     let print s = lift (F.Print (s, Free.Utils.id))
     let random = lift (F.Random Free.Utils.id)
     let abort s = lift (F.Abort s)
+    let _ = print
 end
 
 (* A demo program *)
