@@ -37,13 +37,22 @@ end = struct
           | Free a' -> Free (F.map (fun a'' -> loop a'' b) a')
         in
         loop
-
+(*
     let bind =
         let rec loop a b = match a with
           | Pure a' -> b a'
           | Free a' -> Free (F.map (fun a'' -> loop a'' b) a')
         in
         loop
+*)
+
+    let bind : 'a t -> ('a -> 'b t) -> 'b t =
+      let rec loop (a:'a t) (b: 'a -> 'b t) = match a with
+        | Pure a' -> b a'
+        | Free (a': ('a t) F.t) -> Free (F.map (fun a'' -> loop a'' b) a')
+      in
+      loop
+
 
     let lift f = Free (F.map pure f)
 
